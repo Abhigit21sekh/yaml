@@ -118,22 +118,18 @@ components:
     Dashboard:
       type: object
       properties:
-        activeSubscriptions:
-          type: integer
-          format: int32
-          description: Number of active subscriptions
-        revenue:
-          type: number
-          format: float
-          description: Total revenue from subscriptions
-        mostPopularPlan:
+        currentPlan:
           type: string
           enum: [Free, Pro, Enterprise]
-          description: Name of the most popular subscription plan
-        renewalRate:
-          type: number
-          format: float
-          description: Percentage of subscriptions that renew
+          description: User's current subscription plan
+        apiGenerations:
+          type: integer
+          format: int32
+          description: Number of API codes generated
+        uiGenerations:
+          type: integer
+          format: int32
+          description: Number of UI components generated from Figma/YAML
     Subscription:
       type: object
       properties:
