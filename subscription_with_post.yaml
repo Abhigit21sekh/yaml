@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/Subscription/1.0.0
 paths:
-  "/subscriptionService/getDashboard/Retrieve":
+  "/subscriptionService/Dashboard/Retrieve":
     get:
       tags: [CR - Dashboard]
       summary: Retrieve dashboard
@@ -71,7 +71,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/subscriptionService/getGeneratedCode/Retrieve":
+  "/subscriptionService/GeneratedCode/Retrieve":
     get:
       tags: [CR - GeneratedCode]
       summary: Retrieve generated codes
@@ -92,7 +92,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/subscriptionService/getSettings/Retrieve":
+  "/subscriptionService/Settings/Retrieve":
     get:
       tags: [CR - Settings]
       summary: Retrieve settings
