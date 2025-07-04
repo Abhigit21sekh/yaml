@@ -127,8 +127,6 @@ components:
       type: object
       properties:
         generatedUIs:
-          type: array
-          items:
             $ref: "#/components/schemas/GeneratedUI"
     InitiateUIGenerationResponse:
       type: object
