@@ -1,0 +1,207 @@
+openapi: 3.0.1
+info:
+  title: figmaUIGenerationService
+  description: APIs for generating UI code from Figma designs
+  version: 1.0.0
+servers:
+  - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/UIGeneration/1.0.0
+paths:
+  "/uiGenerationService/GenerateUifromfigma/Initiate":
+    post:
+      tags: [CR - Generation]
+      summary: Generate UI code from Figma
+      description: Initiate UI code generation from Figma design
+      operationId: InitiateUIGeneration
+      requestBody:
+        $ref: "#/components/requestBodies/InitiateUIGenerationRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/InitiateUIGenerationResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+  "/uiGenerationService/GeneratedUI/Retrieve":
+    get:
+      tags: [CR - GeneratedUI]
+      summary: Retrieve generated UI codes
+      description: Retrieve previously generated UI codes
+      operationId: RetrieveGeneratedUI
+      responses:
+        "200":
+          $ref: "#/components/responses/RetrieveGeneratedUIResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+components:
+  schemas:
+    UIGenerationRequest:
+      type: object
+      properties:
+        figmaFileUrl:
+          type: string
+          description: URL of the Figma file to generate code from
+        figmaAccessToken:
+          type: string
+          description: Access token for Figma API
+        targetFramework:
+          type: string
+          enum: [React, Vue, Angular, Svelte, Flutter, SwiftUI, JetpackCompose]
+          description: Target framework for UI generation
+        targetLanguage:
+          type: string
+          enum: [JavaScript, TypeScript, Dart, Kotlin, Swift]
+          description: Target programming language
+        nodeIds:
+          type: array
+          items:
+            type: string
+          description: Specific Figma node IDs to generate (empty for entire file)
+        generationOptions:
+          type: object
+          properties:
+            includeStyles:
+              type: boolean
+              description: Whether to include CSS/Styles
+            responsiveLayout:
+              type: boolean
+              description: Whether to generate responsive layout code
+            componentType:
+              type: string
+              enum: [Functional, Class]
+              description: Type of components to generate (for component-based frameworks)
+            stateManagement:
+              type: string
+              enum: [None, Redux, MobX, Vuex, Provider, Bloc]
+              description: State management solution to include
+    GeneratedUI:
+      type: object
+      properties:
+        generationId:
+          type: string
+          description: Unique identifier for this generation
+        status:
+          type: string
+          enum: [Pending, Completed, Failed]
+          description: Status of the generation process
+        downloadUrl:
+          type: string
+          description: URL to download the generated UI code
+        createdAt:
+          type: string
+          format: date-time
+          description: When the code was generated
+        framework:
+          type: string
+          description: Target framework of the generated UI
+        language:
+          type: string
+          description: Programming language of the generated UI
+        figmaFile:
+          type: string
+          description: Original Figma file name
+        componentsGenerated:
+          type: integer
+          description: Number of UI components generated
+    InitiateUIGenerationRequest:
+      type: object
+      properties:
+        uiGenerationRequest:
+          $ref: "#/components/schemas/UIGenerationRequest"
+    RetrieveGeneratedUIResponse:
+      type: object
+      properties:
+        generatedUIs:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneratedUI"
+    InitiateUIGenerationResponse:
+      type: object
+      properties:
+        generation:
+          $ref: "#/components/schemas/GeneratedUI"
+    HTTPError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code
+        details:
+          type: string
+          description: Additional error details
+  requestBodies:
+    InitiateUIGenerationRequest:
+      description: Request to generate UI code from Figma
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InitiateUIGenerationRequest"
+      required: true
+  responses:
+    InitiateUIGenerationResponse:
+      description: Response for UI generation initiation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/InitiateUIGenerationResponse"
+    RetrieveGeneratedUIResponse:
+      description: Response containing generated UIs
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RetrieveGeneratedUIResponse"
+    BadRequest:
+      description: Bad request error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
+    Unauthorized:
+      description: Unauthorized error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
+    Forbidden:
+      description: Forbidden error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
+    NotFound:
+      description: Not found error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
+    TooManyRequests:
+      description: Too many requests error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
+    InternalServerError:
+      description: Internal server error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/HTTPError"
