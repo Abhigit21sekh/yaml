@@ -114,8 +114,6 @@ components:
       type: object
       properties:
         generatedCodes:
-          type: array
-          items:
             $ref: "#/components/schemas/GeneratedCode"
     InitiateGenerationResponse:
       type: object
