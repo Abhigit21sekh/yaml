@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/BIAN-3/BIAN/UIGeneration/1.0.0
 paths:
-  "/uiGenerationService/GenerateUifromfigma/Initiate":
+  "/figmaUIGenerationService/GenerateUifromfigma/Initiate":
     post:
       tags: [CR - Generation]
       summary: Generate UI code from Figma
@@ -27,7 +27,7 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/uiGenerationService/GeneratedUI/Retrieve":
+  "/figmaUIGenerationService/GeneratedUI/Retrieve":
     get:
       tags: [CR - GeneratedUI]
       summary: Retrieve generated UI codes
